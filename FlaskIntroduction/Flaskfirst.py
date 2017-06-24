@@ -37,6 +37,6 @@ def welcomeSomeone():
 启动服务器：Flask自带服务器，开启debug模式，方便调试。
 
 '''
-if __name__ == "__main__":
-    app.run(debug=True)
+#if __name__ == "__main__":
+#    app.run(debug=True)
 
