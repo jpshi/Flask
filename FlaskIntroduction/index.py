@@ -1,13 +1,23 @@
+# -*- coding:utf-8 -*-
 from flask import Flask
-from flask.ext.bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '123456'
 
 bootstrap = Bootstrap(app)
 
-from flask import render_template # Flask提供render_template方法将jinja2模板引擎集成到项目程序中
-@app.route('/')
+# Flask提供render_template方法将jinja2模板引擎集成到项目程序中
+from flask import render_template 
+
+
+@app.route('/',methods=['GET','POST'])
 def index():
-    return render_template('index.html')
+    name = None
+    form = NameForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        form.name.data = ''        
+    return render_template('index.html',form = form,name = name)
     
 @app.route('/user/<username>')
 def user(username):
@@ -16,7 +26,16 @@ def user(username):
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html')
+    return render_template('404.html'),404
+
+from flask_wtf import FlaskForm
+from wtforms import StringField,SubmitField,PasswordField
+from wtforms.validators import Required,Length
+
+class NameForm(FlaskForm):
+    name = StringField('What is your name',validators=[Required()])
+    pswd = PasswordField("Input your Password",validators=[Required(),Length(min=4)])
+    submit = SubmitField('Submit')
 
 if __name__ == '__main__':
     app.run(debug = True)

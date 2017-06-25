@@ -1,13 +1,9 @@
-{% extends 'bootstrapuser.html' %}
-{% block head %}
-{{ super() }}<!--作用与向已有的标签中添加内容，重要！！！-->
-<link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static',filename='bootstrap.ico') }}">
-{% endblock %}
-{% block title %} Flasky-page not found!{% endblock %}
+{% extends "base.html" %}
 
-{% block content %}
-    <div class="container">
-        <h1>Not Found</h1>
-    </div>
-    
+{% block title %}Flasky - Page Not Found{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Not Found</h1>
+</div>
 {% endblock %}

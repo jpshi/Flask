@@ -4,5 +4,14 @@
 业务逻辑：视图函数中对用户请求的处理过程
 表现逻辑：将业务逻辑的返回值最为响应内容的一部分回送到客户端（Browser）
 -->
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
-<h1>Hello,welcome to my Flask Website.</h1>
+{% block title %}Flasky{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Hello, {% if name %}{{ name }}{% else %}Stranger{% endif %}!</h1>
+</div>
+{{ wtf.quick_form(form) }}
+{% endblock %}
