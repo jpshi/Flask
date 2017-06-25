@@ -14,5 +14,9 @@ def user(username):
     #return render_template('user.html',name = username)#页面渲染过程，注意变量name必须与模板中的变量保持一致
     return render_template('bootstrapuser.html',username=username)
 
-#if __name__ == '__main__':
-#    app.run(debug = True)
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html')
+
+if __name__ == '__main__':
+    app.run(debug = True)
