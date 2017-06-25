@@ -8,16 +8,19 @@ bootstrap = Bootstrap(app)
 
 # Flask提供render_template方法将jinja2模板引擎集成到项目程序中
 from flask import render_template 
-from flask import session,url_for,redirect
+from flask import session,url_for,redirect,flash
 
 
 @app.route('/',methods=['GET','POST'])
 def index():
-    '''通过使用重定向和session技术解决重复提交表单问题'''
+    '''flash消息提醒'''
     form = NameForm()
     if form.validate_on_submit():
-        session['name']=form.name.data
-        return redirect('/')
+        oldname = session.get('name')#表单提交后浏览器通过session保持表单数据
+        if oldname is not None and oldname != form.name.data:
+            flash('用户发生了变更，请留心！！！')
+        session['name'] = form.name.data    
+        return redirect(url_for("index"))
     return render_template('index.html',form = form,name = session.get('name'))
     
 @app.route('/user/<username>')
