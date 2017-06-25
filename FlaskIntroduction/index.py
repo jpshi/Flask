@@ -12,6 +12,7 @@ from flask import render_template
 
 @app.route('/',methods=['GET','POST'])
 def index():
+    '''存在重复提交表单的问题'''
     name = None
     form = NameForm()
     if form.validate_on_submit():
